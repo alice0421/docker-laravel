@@ -49,3 +49,15 @@ services:
       TZ: 'Asia/Tokyo'
     volumes:
       - mysql-volume:/var/lib/mysql # {ローカルのvolumeの名前}:{DockerコンテナのDBのパス}
+  
+  # phpmyadminの設定
+  phpmyadmin:
+    container_name: phpmyadmin_docker-laravel-vue
+    image: phpmyadmin/phpmyadmin:5
+    ports:
+      - ${PMA_PORT}:80
+    depends_on:
+      - db
+    environment: # 自動ログイン用に設定
+      PMA_USER: "${DB_USER}"
+      PMA_PASSWORD: "${DB_PASSWORD}"
