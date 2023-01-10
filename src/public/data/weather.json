@@ -1,0 +1,10 @@
+[
+    {
+        "weatherCode": "100",
+        "weather": "晴れ"
+    },
+    {
+        "weatherCode": "101",
+        "weather": "晴れ 時々 曇り"
+    }
+]

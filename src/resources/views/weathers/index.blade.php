@@ -9,7 +9,7 @@
         @vite(['resources/css/app.css', 'resources/js/api.js'])
     </head>
     <body>
-    <h1 class="text-3xl font-bold m-2">気象庁の天気予報WebAPI経由で表示（東京都の詳細）</h1>
+    <h1 class="text-3xl font-bold m-2">気象庁の天気予報WebAPI（非公式）経由で表示（東京都の詳細）</h1>
         <table>
             <tr id="publishingOffice">
                 <th>発表者</th>
@@ -36,5 +36,6 @@
                 <td></td>
             </tr>
         </table>
+    <p>出典: 気象庁ホームページ(<a href="https://www.jma.go.jp/bosai/forecast/">https://www.jma.go.jp/bosai/forecast/</a>)</p>
     </body>
 </html>
