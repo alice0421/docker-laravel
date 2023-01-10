@@ -2,7 +2,7 @@ import axios from 'axios';
 // console.log("This is api.js.")
 
 // 東京(130000)の予報を取得（気象庁のjsonデータ）
-// response.data[0]の方に3日間、response.data[0]の方に7日間の天気予報が入っている。
+// response.data[0]の方に3日間、response.data[1]の方に7日間の天気予報が入っている。
 const url = axios.get("https://www.jma.go.jp/bosai/forecast/data/forecast/130000.json")
             .then((response) => {
                 console.log(response.data);
@@ -38,4 +38,4 @@ function weatherShow(id, code){
     //     default:
     //         return "その他";
     // }
-} 
+}
