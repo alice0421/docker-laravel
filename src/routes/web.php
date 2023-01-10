@@ -18,5 +18,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// weatherAPI用
+// 気象庁の天気予報WebAPI経由で表示(東京都の概要)
 Route::get('/weathers', [WeatherController::class, 'index']);
