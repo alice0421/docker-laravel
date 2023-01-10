@@ -9,9 +9,7 @@
         @vite('resources/css/app.css')
     </head>
     <body>
-        @foreach ($tests as $test)
-        <h1 class="m-2 text-3xl font-bold">{{ $test->title }}</h1>
-        <p class='m-2 mb-2'>{{ $test->body }}</p>
-        @endforeach
+        <h1 class="m-2 text-3xl font-bold">テスト</h1>
+        <p class='m-2 mb-2'>テスト</p>
     </body>
 </html>

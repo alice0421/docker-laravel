@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TestController; // 追加忘れずに
+use App\Http\Controllers\WeatherController; // 追加忘れずに
 
 /*
 |--------------------------------------------------------------------------
@@ -18,5 +18,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// test用
-Route::get('/tests', [TestController::class, 'index']);
+// weatherAPI用
+Route::get('/weathers', [WeatherController::class, 'index']);
