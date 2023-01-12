@@ -37,6 +37,8 @@ let calendar = new Calendar(calendarEl, {
                     event_name: eventName,
                     start_date: info.start.valueOf(), // プリミティブな値にする（JavaScriptのDateオブジェクト(info.start)をプリミティブにしてD変更されないよう固定）
                     end_date: info.end.valueOf(),
+                    event_color: 'green',
+                    event_border_color: 'green',
                 })
                 .then((respose) => {
                     // event追加
@@ -45,6 +47,8 @@ let calendar = new Calendar(calendarEl, {
                         start: info.start, // event開始日
                         end: info.end, // event終了日
                         allDay: true, //　常に終日
+                        backgroundColor: 'green',
+                        borderColor: 'green',
                     });
                 })
                 .catch((error) => {
@@ -73,6 +77,11 @@ let calendar = new Calendar(calendarEl, {
                 // バリデーションエラーなど
                 alert("登録に失敗しました\nerror: ", error);
             });
+    },
+
+    // event詳細のポップアップ
+    eventClick: function(info) {
+        alert('Event: ' + info.event.title);
     },
 });
 

@@ -12,3 +12,10 @@
         <div id='calendar'></div>
     </body>
 </html>
+
+<style scoped>
+/* event上はマウスがポインターになる */
+.fc-event-title-container{
+    cursor: pointer;
+}
+</style>

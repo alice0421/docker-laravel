@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('event_name')->comment('イベント名');
             $table->date('start_date')->comment('開始日');
             $table->date('end_date')->comment('終了日');
+            $table->string('event_color')->comment('背景色');
+            $table->string('event_border_color')->comment('枠線色');
             $table->timestamps();
         });
     }
