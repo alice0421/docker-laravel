@@ -1,9 +1,18 @@
 // import '@fullcalendar/core/vdom'; // (for vite) ver.6で不要になった（エラー発生）？
+import MicroModal from 'micromodal';
 import axios from "axios";
 import { Calendar } from "@fullcalendar/core";
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from '@fullcalendar/timegrid';
+
+// 日付をYYYY-MM-DDの書式で返すメソッド
+function formatDate(date) {
+    var y = date.getFullYear();
+    var m = ('00' + (date.getMonth()+1)).slice(-2);
+    var d = ('00' + date.getDate()).slice(-2);
+    return (y + '-' + m + '-' + d);
+}
 
 // カレンダーを表示させたいタグのidを取得
 var calendarEl = document.getElementById("calendar");
@@ -20,12 +29,11 @@ let calendar = new Calendar(calendarEl, {
         center: "title", // ヘッダー中央（今表示している月、年）
         end: "dayGridMonth,timeGridWeek", // ヘッダー右（月形式、時間形式）
     },
+    height: "auto",
 
     // event登録(interactionPlugin)
     selectable: true, // selectを可能にする
     select: function (info) { // selectした後に行う処理を記述
-        console.log(info.start);
-        console.log(info.start.valueOf());
         // 入力ダイアログ
         const eventName = prompt("イベントを入力してください");
 
@@ -34,16 +42,18 @@ let calendar = new Calendar(calendarEl, {
             // axiosでevent登録処理
             axios.post("/calendar/create", {
                     // 送信する値
-                    event_name: eventName,
+                    event_title: eventName,
+                    event_body: "body",
                     start_date: info.start.valueOf(), // プリミティブな値にする（JavaScriptのDateオブジェクト(info.start)をプリミティブにしてD変更されないよう固定）
                     end_date: info.end.valueOf(),
                     event_color: 'green',
                     event_border_color: 'green',
                 })
-                .then((respose) => {
-                    // event追加
+                .then((response) => {
+                    // event表示
                     calendar.addEvent({
                         title: eventName, // eventタイトル
+                        description: "body", // event内容
                         start: info.start, // event開始日
                         end: info.end, // event終了日
                         allDay: true, //　常に終日
@@ -58,7 +68,7 @@ let calendar = new Calendar(calendarEl, {
         }
     },
 
-    // DBに登録したevent
+    // DBに登録したevent表示
     events: function (info, successCallback, failureCallback) { // eventsは表示カレンダー表示が切り替わるたびに実行される
         // Laravelのevent取得処理（get）の呼び出し
         axios
@@ -81,7 +91,13 @@ let calendar = new Calendar(calendarEl, {
 
     // event詳細のポップアップ
     eventClick: function(info) {
-        alert('Event: ' + info.event.title);
+        console.log(info.event);
+        document.getElementById("id").value = info.event.id;
+        document.getElementById("edit_title").value = info.event.title;
+        document.getElementById("edit_start").value = formatDate(info.event.start);
+        document.getElementById("edit_end").value = formatDate(info.event.end);
+        document.getElementById("edit_body").value = info.event.extendedProps.description;
+        MicroModal.show('modal-1');
     },
 });
 

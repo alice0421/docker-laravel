@@ -16,7 +16,7 @@ class EventController extends Controller
     public function create(Request $request, Event $event){
         // バリデーション
         $request->validate([
-            'event_name' => 'required|max:32', // 最大32文字
+            'event_title' => 'required',
             'start_date' => 'required|integer',
             'end_date' => 'required|integer',
             'event_color' => 'required',
@@ -24,7 +24,8 @@ class EventController extends Controller
         ]);
 
         // 登録処理
-        $event->event_name = $request->input('event_name');
+        $event->event_title = $request->input('event_title');
+        $event->event_body = $request->input('event_body');
         $event->start_date = date('Y-m-d', $request->input('start_date') / 1000); // 日付変換（JSのタイムスタンプはミリ秒なので秒に変換）
         $event->end_date = date('Y-m-d', $request->input('end_date') / 1000);
         $event->event_color = $request->input('event_color');
@@ -50,7 +51,8 @@ class EventController extends Controller
         return $event->query()
             // DBから取得する際にFullCalendarの形式にカラム名を変更する
             ->select(
-                'event_name as title',
+                'event_title as title',
+                'event_body as description',
                 'start_date as start',
                 'end_date as end',
                 'event_color as backgroundColor',
