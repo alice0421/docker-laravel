@@ -17,22 +17,21 @@ class EventController extends Controller
         // バリデーション
         $request->validate([
             'event_title' => 'required',
-            'start_date' => 'required|integer',
-            'end_date' => 'required|integer',
+            'start_date' => 'required',
+            'end_date' => 'required',
             'event_color' => 'required',
-            'event_border_color' => 'required',
         ]);
 
         // 登録処理
         $event->event_title = $request->input('event_title');
         $event->event_body = $request->input('event_body');
-        $event->start_date = date('Y-m-d', $request->input('start_date') / 1000); // 日付変換（JSのタイムスタンプはミリ秒なので秒に変換）
-        $event->end_date = date('Y-m-d', $request->input('end_date') / 1000);
+        $event->start_date = $request->input('start_date');
+        $event->end_date = date("Y-m-d", strtotime("{$request->input('end_date')} +1 day"));
         $event->event_color = $request->input('event_color');
-        $event->event_border_color = $request->input('event_border_color');
+        $event->event_border_color = $request->input('event_color');
         $event->save();
 
-        return;
+        return redirect(route("show"));
     }
 
     // event取得
@@ -44,7 +43,7 @@ class EventController extends Controller
         ]);
 
         // 現在カレンダーが表示している日付の期間
-        $start_date = date('Y-m-d', $request->input('start_date') / 1000);
+        $start_date = date('Y-m-d', $request->input('start_date') / 1000); // 日付変換（JSのタイムスタンプはミリ秒なので秒に変換）
         $end_date = date('Y-m-d', $request->input('end_date') / 1000);
 
         // 表示処理

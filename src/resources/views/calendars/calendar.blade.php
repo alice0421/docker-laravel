@@ -12,24 +12,30 @@
         <!-- カレンダー表示 -->
         <div id='calendar'></div>
 
-        <!-- カレンダー詳細表示モーダル -->
+        <!-- カレンダー新規追加モーダル -->
         <div id="modal-1" class="modal" aria-hidden="true" data-micromodal-close>
             <div class="overlay">
-                <div class="elements" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                <form class="elements" method="POST" action="{{ route('create') }}" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                    @csrf
                     <div id="modal-1-content">
                         <input type="hidden" id="id" name="id" value="" />
-                        <label for="title">タイトル</label>
-                        <input type="text" id="edit_title" name="title" value="" />
-                        <label for="start">開始日時</label>
-                        <input type="date" id="edit_start" name="start" value="" />
-                        <label for="end">終了日時</label>
-                        <input type="date" id="edit_end" name="end" value="" />
-                        <label for="body">内容</label>
-                        <textarea id="edit_body" name="body" rows="3" value=""></textarea>
+                        <label for="event_title">タイトル</label>
+                        <input class="input-title" type="text" id="event_title" name="event_title" value="" />
+                        <label for="start_date">開始日時</label>
+                        <input class="input-date" type="date" id="start_date" name="start_date" value="" />
+                        <label for="end_date">終了日時</label>
+                        <input class="input-date" type="date" id="end_date" name="end_date" value="" />
+                        <label for="event_body" style="display: block">内容</label>
+                        <textarea id="event_body" name="event_body" rows="3" value=""></textarea>
+                        <label for="event_color">背景色</label>
+                        <select id="event_color" name="event_color">
+                            <option value="blue">青</option>
+                            <option value="green">緑</option>
+                        </select>
                     </div>
                     <button type="button" aria-label="Close modal" data-micromodal-close>キャンセル</button>
                     <button type="submit">決定</button>
-                </div>
+                </form>
             </div>
         </div>
     </body>
@@ -77,21 +83,36 @@
     background-color: white;
 }
 
+/* その他 */
 input{
-    display: block;
-    width: 50%;
-    margin: 0 0 10px;
     padding: 2px;
     border: 1px solid black;
     border-radius: 5px;
 }
+.input-title{
+    display: block;
+    width: 80%;
+    margin: 0 0 20px;
+}
+.input-date{
+    width: 27%;
+    margin: 0 5px 20px 0;
+}
 textarea{
     display: block;
     width: 80%;
-    margin: 0 0 10px;
+    margin: 0 0 20px;
     padding: 2px;
     border: 1px solid black;
     border-radius: 5px;
     resize: none;
+}
+select{
+    display: block;
+    width: 20%;
+    margin: 0 0 20px;
+    padding: 2px;
+    border: 1px solid black;
+    border-radius: 5px;
 }
 </style>

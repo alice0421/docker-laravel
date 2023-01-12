@@ -6,12 +6,13 @@ import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from '@fullcalendar/timegrid';
 
-// 日付をYYYY-MM-DDの書式で返すメソッド
-function formatDate(date) {
-    var y = date.getFullYear();
-    var m = ('00' + (date.getMonth()+1)).slice(-2);
-    var d = ('00' + date.getDate()).slice(-2);
-    return (y + '-' + m + '-' + d);
+// 日付を-1してYYYY-MM-DDの書式で返すメソッド
+function formatDate(date, pos) {
+    var dt = new Date(date);
+    if(pos==="end"){
+        dt.setDate(dt.getDate() - 1);
+    }
+    return dt.getFullYear() + '-' +('0' + (dt.getMonth()+1)).slice(-2)+ '-' +  ('0' + dt.getDate()).slice(-2);
 }
 
 // カレンダーを表示させたいタグのidを取得
@@ -24,18 +25,32 @@ let calendar = new Calendar(calendarEl, {
 
     // カレンダー表示(dayGridPlugin)
     initialView: "dayGridMonth", // 最初に表示させるページの形式
+    customButtons: { // カスタムボタン
+        eventAddButton: { // event新規追加ボタン
+            text: '予定を追加',
+            click: function() {
+                document.getElementById("id").value = "";
+                document.getElementById("event_title").value = "";
+                document.getElementById("start_date").value = "";
+                document.getElementById("end_date").value = "";
+                document.getElementById("event_body").value = "";
+                document.getElementById("event_color").value = "blue";
+                MicroModal.show('modal-1');
+            }
+        }
+    },
     headerToolbar: { // ヘッダーの設定（コンマで区切ると間が空かない、半角スペースで区切ると間が空く）
         start: "prev,next today", // ヘッダー左（前月、次月、今日の順番で左から配置）
         center: "title", // ヘッダー中央（今表示している月、年）
-        end: "dayGridMonth,timeGridWeek", // ヘッダー右（月形式、時間形式）
+        end: "eventAddButton dayGridMonth,timeGridWeek", // ヘッダー右（event新規追加、月形式、時間形式）
     },
     height: "auto",
 
     // event登録(interactionPlugin)
-    selectable: true, // selectを可能にする
+    // selectable: true, // selectを可能にする
     select: function (info) { // selectした後に行う処理を記述
         // 入力ダイアログ
-        const eventName = prompt("イベントを入力してください");
+        const eventName = prompt("タイトルを入力");
 
         // eventの追加（タイトルが空なら追加しない）
         if (eventName) {
@@ -91,12 +106,12 @@ let calendar = new Calendar(calendarEl, {
 
     // event詳細のポップアップ
     eventClick: function(info) {
-        console.log(info.event);
         document.getElementById("id").value = info.event.id;
-        document.getElementById("edit_title").value = info.event.title;
-        document.getElementById("edit_start").value = formatDate(info.event.start);
-        document.getElementById("edit_end").value = formatDate(info.event.end);
-        document.getElementById("edit_body").value = info.event.extendedProps.description;
+        document.getElementById("event_title").value = info.event.title;
+        document.getElementById("start_date").value = formatDate(info.event.start);
+        document.getElementById("end_date").value = formatDate(info.event.end, "end");
+        document.getElementById("event_body").value = info.event.extendedProps.description;
+        document.getElementById("event_color").value = info.event.backgroundColor;
         MicroModal.show('modal-1');
     },
 });
