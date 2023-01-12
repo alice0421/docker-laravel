@@ -17,6 +17,3 @@ use App\Http\Controllers\TestController; // 追加忘れずに
 Route::get('/', function () {
     return view('welcome');
 });
-
-// test用
-Route::get('/tests', [TestController::class, 'index']);
