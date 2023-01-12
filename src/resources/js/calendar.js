@@ -21,20 +21,21 @@ let calendar = new Calendar(calendarEl, {
         end: "dayGridMonth,timeGridWeek", // ヘッダー右（月形式、時間形式）
     },
 
-    // イベント登録(interactionPlugin)
+    // event登録(interactionPlugin)
     selectable: true, // selectを可能にする
     select: function (info) { // selectした後に行う処理を記述
         console.log(info.start);
+        console.log(info.start.valueOf());
         // 入力ダイアログ
         const eventName = prompt("イベントを入力してください");
 
-        // イベントの追加（タイトルが空なら追加しない）
+        // eventの追加（タイトルが空なら追加しない）
         if (eventName) {
             // axiosでevent登録処理
             axios.post("/calendar/create", {
                     // 送信する値
                     event_name: eventName,
-                    start_date: info.start.valueOf(), // プリミティブな値にする（String型から変更されないよう固定）
+                    start_date: info.start.valueOf(), // プリミティブな値にする（JavaScriptのDateオブジェクト(info.start)をプリミティブにしてD変更されないよう固定）
                     end_date: info.end.valueOf(),
                 })
                 .then((respose) => {
@@ -51,6 +52,27 @@ let calendar = new Calendar(calendarEl, {
                     alert("登録に失敗しました\nerror: ", error);
                 });
         }
+    },
+
+    // DBに登録したevent
+    events: function (info, successCallback, failureCallback) { // eventsは表示カレンダー表示が切り替わるたびに実行される
+        // Laravelのevent取得処理（get）の呼び出し
+        axios
+            .post("/calendar/get", {
+                // 現在カレンダーが表示している日付の期間
+                start_date: info.start.valueOf(),
+                end_date: info.end.valueOf(),
+            })
+            .then((response) => {
+                // 既に表示されているイベントを削除（重複防止）
+                calendar.removeAllEvents(); // ver.6でもどうやら使える（ドキュメントにはない）
+                // カレンダーに読み込み
+                successCallback(response.data); // successCallbackにeventをオブジェクト型で入れるとカレンダーに表示できる
+            })
+            .catch((error) => {
+                // バリデーションエラーなど
+                alert("登録に失敗しました\nerror: ", error);
+            });
     },
 });
 
