@@ -29,6 +29,14 @@ let calendar = new Calendar(calendarEl, {
         eventAddButton: { // event新規追加ボタン
             text: '予定を追加',
             click: function() {
+                // 初期化
+                document.getElementById("new-id").value = "";
+                document.getElementById("new-event_title").value = "";
+                document.getElementById("new-start_date").value = "";
+                document.getElementById("new-end_date").value = "";
+                document.getElementById("new-event_body").value = "";
+                document.getElementById("new-event_color").value = "blue";
+
                 MicroModal.show('modal-add');
             }
         }
@@ -40,42 +48,19 @@ let calendar = new Calendar(calendarEl, {
     },
     height: "auto",
 
-    // event登録(interactionPlugin)
-    // selectable: true, // selectを可能にする
-    // select: function (info) { // selectした後に行う処理を記述
-    //     // 入力ダイアログ
-    //     const eventName = prompt("タイトルを入力");
+    // カレンダーで日程を指定してevent登録(interactionPlugin)
+    selectable: true, // selectを可能にする
+    select: function (info) { // selectした後に行う処理を記述
+        // 選択した日程を反映（のこりは初期化）
+        document.getElementById("new-id").value = "";
+        document.getElementById("new-event_title").value = "";
+        document.getElementById("new-start_date").value = formatDate(info.start);
+        document.getElementById("new-end_date").value = formatDate(info.end, "end");
+        document.getElementById("new-event_body").value = "";
+        document.getElementById("new-event_color").value = "blue";
 
-    //     // eventの追加（タイトルが空なら追加しない）
-    //     if (eventName) {
-    //         // axiosでevent登録処理
-    //         axios.post("/calendar/create", {
-    //                 // 送信する値
-    //                 event_title: eventName,
-    //                 event_body: "body",
-    //                 start_date: info.start.valueOf(), // プリミティブな値にする（JavaScriptのDateオブジェクト(info.start)をプリミティブにしてD変更されないよう固定）
-    //                 end_date: info.end.valueOf(),
-    //                 event_color: 'green',
-    //                 event_border_color: 'green',
-    //             })
-    //             .then((response) => {
-    //                 // event表示
-    //                 calendar.addEvent({
-    //                     title: eventName, // eventタイトル
-    //                     description: "body", // event内容
-    //                     start: info.start, // event開始日
-    //                     end: info.end, // event終了日
-    //                     allDay: true, //　常に終日
-    //                     backgroundColor: 'green',
-    //                     borderColor: 'green',
-    //                 });
-    //             })
-    //             .catch((error) => {
-    //                 // バリデーションエラーなど
-    //                 alert("登録に失敗しました\nerror: ", error);
-    //             });
-    //     }
-    // },
+        MicroModal.show('modal-add');
+    },
 
     // DBに登録したevent表示
     events: function (info, successCallback, failureCallback) { // eventsは表示カレンダー表示が切り替わるたびに実行される

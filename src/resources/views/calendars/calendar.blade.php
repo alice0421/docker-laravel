@@ -18,17 +18,17 @@
                 <form class="elements" method="POST" action="{{ route('create') }}" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
                     @csrf
                     <div id="modal-1-content">
-                        <input type="hidden" name="id" value="" />
+                        <input id="new-id" type="hidden" name="id" value="" />
                         <label for="event_title">タイトル</label>
-                        <input class="input-title" type="text" name="event_title" value="" />
+                        <input id="new-event_title" class="input-title" type="text" name="event_title" value="" />
                         <label for="start_date">開始日時</label>
-                        <input class="input-date" type="date" name="start_date" value="" />
+                        <input id="new-start_date" class="input-date" type="date" name="start_date" value="" />
                         <label for="end_date">終了日時</label>
-                        <input class="input-date" type="date" name="end_date" value="" />
+                        <input id="new-end_date" class="input-date" type="date" name="end_date" value="" />
                         <label for="event_body" style="display: block">内容</label>
-                        <textarea name="event_body" rows="3" value=""></textarea>
+                        <textarea id="new-event_body" name="event_body" rows="3" value=""></textarea>
                         <label for="event_color">背景色</label>
-                        <select name="event_color">
+                        <select id="new-event_color" name="event_color">
                             <option value="blue" selected>青</option>
                             <option value="green">緑</option>
                         </select>
