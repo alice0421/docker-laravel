@@ -86,14 +86,25 @@ let calendar = new Calendar(calendarEl, {
     // event詳細のポップアップ
     eventClick: function(info) {
         document.getElementById("id").value = info.event.id;
+        document.getElementById("delete-id").value = info.event.id;
         document.getElementById("event_title").value = info.event.title;
         document.getElementById("start_date").value = formatDate(info.event.start);
         document.getElementById("end_date").value = formatDate(info.event.end, "end");
         document.getElementById("event_body").value = info.event.extendedProps.description;
         document.getElementById("event_color").value = info.event.backgroundColor;
+
         MicroModal.show('modal-update');
     },
 });
+
+// eventの削除（なぜか反応しない）
+// function deleteEvent(){
+//     'use strict'
+
+//     if (confirm('削除すると復元できません。\n本当に削除しますか？')) {
+//         document.getElementById('delete-form').submit();
+//     }
+// }
 
 // カレンダーのレンダリング
 calendar.render();

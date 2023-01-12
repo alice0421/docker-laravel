@@ -80,4 +80,11 @@ class EventController extends Controller
 
         return redirect(route("show"));
     }
+
+    // event削除
+    public function delete(Request $request, Event $event){
+        $event->find($request->input('id'))->delete();
+
+        return redirect(route("show"));
+    }
 }
