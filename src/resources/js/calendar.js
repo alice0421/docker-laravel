@@ -1,4 +1,5 @@
 // import '@fullcalendar/core/vdom'; // (for vite) ver.6で不要になった（エラー発生）？
+import axios from "axios";
 import { Calendar } from "@fullcalendar/core";
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -23,18 +24,32 @@ let calendar = new Calendar(calendarEl, {
     // イベント登録(interactionPlugin)
     selectable: true, // selectを可能にする
     select: function (info) { // selectした後に行う処理を記述
+        console.log(info.start);
         // 入力ダイアログ
         const eventName = prompt("イベントを入力してください");
 
         // イベントの追加（タイトルが空なら追加しない）
         if (eventName) {
-            calendar.addEvent({
-                // 登録するevent要素
-                title: eventName, // カレンダーに見えるタイトル
-                start: info.start, // eventの始まり
-                end: info.end, // eventの終わり
-                allDay: true, // 常に終日
-            });
+            // axiosでevent登録処理
+            axios.post("/calendar/create", {
+                    // 送信する値
+                    event_name: eventName,
+                    start_date: info.start.valueOf(), // プリミティブな値にする（String型から変更されないよう固定）
+                    end_date: info.end.valueOf(),
+                })
+                .then((respose) => {
+                    // event追加
+                    calendar.addEvent({
+                        title: eventName, // eventタイトル
+                        start: info.start, // event開始日
+                        end: info.end, // event終了日
+                        allDay: true, //　常に終日
+                    });
+                })
+                .catch((error) => {
+                    // バリデーションエラーなど
+                    alert("登録に失敗しました\nerror: ", error);
+                });
         }
     },
 });
