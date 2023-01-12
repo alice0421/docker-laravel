@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TestController; // 追加忘れずに
+use App\Http\Controllers\CalenderController; // 追加忘れずに
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +17,6 @@ use App\Http\Controllers\TestController; // 追加忘れずに
 Route::get('/', function () {
     return view('welcome');
 });
+
+// FullCalender表示用（月）
+Route::get('/calender', [CalenderController::class, 'calender'])->name("calender");
