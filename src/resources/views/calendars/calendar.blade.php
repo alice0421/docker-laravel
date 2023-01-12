@@ -13,11 +13,39 @@
         <div id='calendar'></div>
 
         <!-- カレンダー新規追加モーダル -->
-        <div id="modal-1" class="modal" aria-hidden="true" data-micromodal-close>
+        <div id="modal-add" class="modal" aria-hidden="true" data-micromodal-close>
             <div class="overlay">
                 <form class="elements" method="POST" action="{{ route('create') }}" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
                     @csrf
                     <div id="modal-1-content">
+                        <input type="hidden" name="id" value="" />
+                        <label for="event_title">タイトル</label>
+                        <input class="input-title" type="text" name="event_title" value="" />
+                        <label for="start_date">開始日時</label>
+                        <input class="input-date" type="date" name="start_date" value="" />
+                        <label for="end_date">終了日時</label>
+                        <input class="input-date" type="date" name="end_date" value="" />
+                        <label for="event_body" style="display: block">内容</label>
+                        <textarea name="event_body" rows="3" value=""></textarea>
+                        <label for="event_color">背景色</label>
+                        <select name="event_color">
+                            <option value="blue" selected>青</option>
+                            <option value="green">緑</option>
+                        </select>
+                    </div>
+                    <button type="button" aria-label="Close modal" data-micromodal-close>キャンセル</button>
+                    <button type="submit">決定</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- カレンダー詳細表示モーダル（event更新） -->
+        <div id="modal-update" class="modal" aria-hidden="true" data-micromodal-close>
+            <div class="overlay">
+                <form class="elements" method="POST" action="{{ route('update') }}" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                    @csrf
+                    @method('PUT')
+                    <div id="modal-2-content">
                         <input type="hidden" id="id" name="id" value="" />
                         <label for="event_title">タイトル</label>
                         <input class="input-title" type="text" id="event_title" name="event_title" value="" />

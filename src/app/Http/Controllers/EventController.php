@@ -50,6 +50,7 @@ class EventController extends Controller
         return $event->query()
             // DBから取得する際にFullCalendarの形式にカラム名を変更する
             ->select(
+                'id',
                 'event_title as title',
                 'event_body as description',
                 'start_date as start',
@@ -61,5 +62,22 @@ class EventController extends Controller
             ->where('end_date', '>', $start_date)
             ->where('start_date', '<', $end_date) // AND条件
             ->get();
+    }
+
+    // event更新
+    public function update(Request $request, Event $event){
+        $input = new Event();
+
+        $input->event_title = $request->input('event_title');
+        $input->event_body = $request->input('event_body');
+        $input->start_date = $request->input('start_date');
+        $input->end_date = date("Y-m-d", strtotime("{$request->input('end_date')} +1 day"));
+        $input->event_color = $request->input('event_color');
+        $input->event_border_color = $request->input('event_color');
+
+        // fill()の中身はArray型が必要だが、$inputのままではコレクションが帰ってきてしまうため、Array型に変換
+        $event->find($request->input('id'))->fill($input->attributesToArray())->save();
+
+        return redirect(route("show"));
     }
 }

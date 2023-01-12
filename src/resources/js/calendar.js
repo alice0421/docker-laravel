@@ -29,13 +29,7 @@ let calendar = new Calendar(calendarEl, {
         eventAddButton: { // event新規追加ボタン
             text: '予定を追加',
             click: function() {
-                document.getElementById("id").value = "";
-                document.getElementById("event_title").value = "";
-                document.getElementById("start_date").value = "";
-                document.getElementById("end_date").value = "";
-                document.getElementById("event_body").value = "";
-                document.getElementById("event_color").value = "blue";
-                MicroModal.show('modal-1');
+                MicroModal.show('modal-add');
             }
         }
     },
@@ -48,40 +42,40 @@ let calendar = new Calendar(calendarEl, {
 
     // event登録(interactionPlugin)
     // selectable: true, // selectを可能にする
-    select: function (info) { // selectした後に行う処理を記述
-        // 入力ダイアログ
-        const eventName = prompt("タイトルを入力");
+    // select: function (info) { // selectした後に行う処理を記述
+    //     // 入力ダイアログ
+    //     const eventName = prompt("タイトルを入力");
 
-        // eventの追加（タイトルが空なら追加しない）
-        if (eventName) {
-            // axiosでevent登録処理
-            axios.post("/calendar/create", {
-                    // 送信する値
-                    event_title: eventName,
-                    event_body: "body",
-                    start_date: info.start.valueOf(), // プリミティブな値にする（JavaScriptのDateオブジェクト(info.start)をプリミティブにしてD変更されないよう固定）
-                    end_date: info.end.valueOf(),
-                    event_color: 'green',
-                    event_border_color: 'green',
-                })
-                .then((response) => {
-                    // event表示
-                    calendar.addEvent({
-                        title: eventName, // eventタイトル
-                        description: "body", // event内容
-                        start: info.start, // event開始日
-                        end: info.end, // event終了日
-                        allDay: true, //　常に終日
-                        backgroundColor: 'green',
-                        borderColor: 'green',
-                    });
-                })
-                .catch((error) => {
-                    // バリデーションエラーなど
-                    alert("登録に失敗しました\nerror: ", error);
-                });
-        }
-    },
+    //     // eventの追加（タイトルが空なら追加しない）
+    //     if (eventName) {
+    //         // axiosでevent登録処理
+    //         axios.post("/calendar/create", {
+    //                 // 送信する値
+    //                 event_title: eventName,
+    //                 event_body: "body",
+    //                 start_date: info.start.valueOf(), // プリミティブな値にする（JavaScriptのDateオブジェクト(info.start)をプリミティブにしてD変更されないよう固定）
+    //                 end_date: info.end.valueOf(),
+    //                 event_color: 'green',
+    //                 event_border_color: 'green',
+    //             })
+    //             .then((response) => {
+    //                 // event表示
+    //                 calendar.addEvent({
+    //                     title: eventName, // eventタイトル
+    //                     description: "body", // event内容
+    //                     start: info.start, // event開始日
+    //                     end: info.end, // event終了日
+    //                     allDay: true, //　常に終日
+    //                     backgroundColor: 'green',
+    //                     borderColor: 'green',
+    //                 });
+    //             })
+    //             .catch((error) => {
+    //                 // バリデーションエラーなど
+    //                 alert("登録に失敗しました\nerror: ", error);
+    //             });
+    //     }
+    // },
 
     // DBに登録したevent表示
     events: function (info, successCallback, failureCallback) { // eventsは表示カレンダー表示が切り替わるたびに実行される
@@ -112,7 +106,7 @@ let calendar = new Calendar(calendarEl, {
         document.getElementById("end_date").value = formatDate(info.event.end, "end");
         document.getElementById("event_body").value = info.event.extendedProps.description;
         document.getElementById("event_color").value = info.event.backgroundColor;
-        MicroModal.show('modal-1');
+        MicroModal.show('modal-update');
     },
 });
 
