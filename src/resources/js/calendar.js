@@ -1,5 +1,4 @@
-// import '@fullcalendar/core/vdom'; // (for vite) ver.6で不要になった（エラー発生）？
-import MicroModal from 'micromodal';
+//import '@fullcalendar/core/vdom'; // (for vite) ver.6で不要になった（エラー発生）？
 import axios from "axios";
 import { Calendar } from "@fullcalendar/core";
 import interactionPlugin from '@fullcalendar/interaction';
@@ -37,7 +36,8 @@ let calendar = new Calendar(calendarEl, {
                 document.getElementById("new-event_body").value = "";
                 document.getElementById("new-event_color").value = "blue";
 
-                MicroModal.show('modal-add');
+                //　モーダルを開く
+                document.getElementById('modal-add').style.display = 'flex';
             }
         }
     },
@@ -59,7 +59,8 @@ let calendar = new Calendar(calendarEl, {
         document.getElementById("new-event_body").value = "";
         document.getElementById("new-event_color").value = "blue";
 
-        MicroModal.show('modal-add');
+        //　モーダルを開く
+        document.getElementById('modal-add').style.display = 'flex';
     },
 
     // DBに登録したevent表示
@@ -93,18 +94,10 @@ let calendar = new Calendar(calendarEl, {
         document.getElementById("event_body").value = info.event.extendedProps.description;
         document.getElementById("event_color").value = info.event.backgroundColor;
 
-        MicroModal.show('modal-update');
+        //　モーダルを開く
+        document.getElementById('modal-update').style.display = 'flex';
     },
 });
-
-// eventの削除（なぜか反応しない）
-// function deleteEvent(){
-//     'use strict'
-
-//     if (confirm('削除すると復元できません。\n本当に削除しますか？')) {
-//         document.getElementById('delete-form').submit();
-//     }
-// }
 
 // カレンダーのレンダリング
 calendar.render();

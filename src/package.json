@@ -14,7 +14,6 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
-        "fullcalendar": "^6.0.3",
-        "micromodal": "^0.4.10"
+        "fullcalendar": "^6.0.3"
     }
 }

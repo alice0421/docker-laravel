@@ -1,2 +1,4 @@
 import './bootstrap';
-import './calendar'; // resources/js下のファイルはここに追記すればOK
+// resources/js下のファイルはここに追記すればOK
+import './calendar';
+import './modal.js';
