@@ -46,7 +46,7 @@ let calendar = new Calendar(calendarEl, {
         center: "title", // ヘッダー中央（今表示している月、年）
         end: "eventAddButton dayGridMonth,timeGridWeek", // ヘッダー右（event新規追加、月形式、時間形式）
     },
-    height: "auto",
+    height: "auto", // 高さをウィンドウサイズに揃える
 
     // カレンダーで日程を指定してevent登録(interactionPlugin)
     selectable: true, // selectを可能にする

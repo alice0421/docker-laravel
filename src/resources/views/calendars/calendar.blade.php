@@ -40,34 +40,33 @@
         <!-- カレンダー詳細表示モーダル（event更新） -->
         <!-- 別ページなら、$eventでの取得が容易にできる -->
         <div id="modal-update" class="modal">
-                <div class="modal-contents">
-                    <form method="POST" action="{{ route('update') }}" >
-                        @csrf
-                        @method('PUT')
-                        <input type="hidden" id="id" name="id" value="" />
-                        <label for="event_title">タイトル</label>
-                        <input class="input-title" type="text" id="event_title" name="event_title" value="" />
-                        <label for="start_date">開始日時</label>
-                        <input class="input-date" type="date" id="start_date" name="start_date" value="" />
-                        <label for="end_date">終了日時</label>
-                        <input class="input-date" type="date" id="end_date" name="end_date" value="" />
-                        <label for="event_body" style="display: block">内容</label>
-                        <textarea id="event_body" name="event_body" rows="3" value=""></textarea>
-                        <label for="event_color">背景色</label>
-                        <select id="event_color" name="event_color">
-                            <option value="blue">青</option>
-                            <option value="green">緑</option>
-                        </select>
-                        <button type="button" onclick="closeUpdateModal()">キャンセル</button>
-                        <button type="submit">決定</button>
-                    </form>
-                    <form id="delete-form" method="post" action="{{ route('delete') }}">
-                        @csrf
-                        @method('DELETE')
-                        <input type="hidden" id="delete-id" name="id" value="" />
-                        <button class="delete" type="button" onclick="deleteEvent()">削除</button>
-                    </form>
-                </div>
+            <div class="modal-contents">
+                <form method="POST" action="{{ route('update') }}" >
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" id="id" name="id" value="" />
+                    <label for="event_title">タイトル</label>
+                    <input class="input-title" type="text" id="event_title" name="event_title" value="" />
+                    <label for="start_date">開始日時</label>
+                    <input class="input-date" type="date" id="start_date" name="start_date" value="" />
+                    <label for="end_date">終了日時</label>
+                    <input class="input-date" type="date" id="end_date" name="end_date" value="" />
+                    <label for="event_body" style="display: block">内容</label>
+                    <textarea id="event_body" name="event_body" rows="3" value=""></textarea>
+                    <label for="event_color">背景色</label>
+                    <select id="event_color" name="event_color">
+                        <option value="blue">青</option>
+                        <option value="green">緑</option>
+                    </select>
+                    <button type="button" onclick="closeUpdateModal()">キャンセル</button>
+                    <button type="submit">決定</button>
+                </form>
+                <form id="delete-form" method="post" action="{{ route('delete') }}">
+                    @csrf
+                    @method('DELETE')
+                    <input type="hidden" id="delete-id" name="id" value="" />
+                    <button class="delete" type="button" onclick="deleteEvent()">削除</button>
+                </form>
             </div>
         </div>
     </body>

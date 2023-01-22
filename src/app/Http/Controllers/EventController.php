@@ -75,7 +75,7 @@ class EventController extends Controller
         $input->event_color = $request->input('event_color');
         $input->event_border_color = $request->input('event_color');
 
-        // fill()の中身はArray型が必要だが、$inputのままではコレクションが帰ってきてしまうため、Array型に変換
+        // fill()の中身はArray型が必要だが、$inputのままではコレクションが返ってきてしまうため、Array型に変換
         $event->find($request->input('id'))->fill($input->attributesToArray())->save();
 
         return redirect(route("show"));
