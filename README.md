@@ -177,7 +177,8 @@ import './calendar'; // これを追記
 
 以上の準備を完了し、最後にコンソールで`npm run build`する。
 以下のようなページが表示されたらOK。
-<img src="./README_img/calendar_01.png" title="calendar_01.png" width="640">
+
+<img width="1439" alt="calendar_01" src="https://user-images.githubusercontent.com/86033630/213919796-ed810327-cff5-4127-b886-bedc92103ada.png">
 
 # 基礎機能実装
 カレンダーの表示ができたので、カレンダーの各機能を実装していく。
