@@ -1,4 +1,4 @@
-# **FullCalendar**
+# **Laravel9×FullCalendar(ver.6)**
 # 概要
 Laravel9とFullCalendar(ver.6)を使った簡易的なカレンダーウェブアプリを作成する。
 本記事では、モーダルを用いてカレンダーの追加・作成・削除を行う。
