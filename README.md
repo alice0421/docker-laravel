@@ -186,8 +186,7 @@ import './calendar'; // これを追記
 予定追加ボタンを押すと、予定が入力できるモーダルが表示され、カレンダーに新たに予定が追加されるような挙動を実装する。
 > ※ 以下のデモは、[予定の追加（ボタン）](#予定の追加（ボタン）)と[予定の表示](#予定の表示)の実装が完了した段階のものである。
 
-<video width="640" controls>
-<source src="./README_img/calendar_02.mov" type="video/mp4" title="calendar_02.mov"></video>
+https://user-images.githubusercontent.com/86033630/213919495-9f41d886-fb7f-49c6-bf99-0fab65ef033c.mov
 
 ### ルーティングの追加
 `web.php`にカレンダーに新しく予定を追加し、DBに保存するためのPOSTリクエストを記述する。
@@ -514,8 +513,7 @@ class EventController extends Controller
 ## 予定の編集
 カレンダーに表示されている予定を押すと、予定が編集できるモーダルが表示され、予定を編集できる挙動を実装する。
 
-<video width="640" controls>
-<source src="./README_img/calendar_04.mov" type="video/mp4" title="calendar_04.mov"></video>
+https://user-images.githubusercontent.com/86033630/213919620-baa377d4-a138-4c2f-812f-595ead4d4ee3.mov
 
 ### ルーティングの追加
 `web.php`に、DBに登録した予定を取得するPUTリクエストを記述する。
@@ -724,8 +722,7 @@ window.closeUpdateModal = function(){
 最後に、予定を削除する機能を実装する。
 予定が編集できるモーダルに削除ボタンを追加し、削除ボタンを押すと予定を削除する挙動を実装する。
 
-<video width="640" controls>
-<source src="./README_img/calendar_05.mov" type="video/mp4" title="calendar_05.mov"></video>
+https://user-images.githubusercontent.com/86033630/213919653-3f6a9503-06b6-40ce-b037-238dfc0caa2e.mov
 
 ### ルーティングの追加
 `web.php`に、予定を削除するDELETEリクエストを記述する。
@@ -864,8 +861,8 @@ window.deleteEvent = function(){
 # 発展機能実装
 ## 予定の追加（日程選択）
 カレンダー内の日程を1つもしくは複数選択すると、予定が入力できるモーダルが表示され、カレンダーに新たに予定が追加されるような挙動を実装する。
-[calendar_03.mov](https://college-lev.notepm.jp/private/c82013b4-9a43-11ed-846c-064017533d40.mov)
 
+https://user-images.githubusercontent.com/86033630/213919557-d9e3dc2d-7597-4b35-b6d3-86b8f1d44e9f.mov
 
 ### JavaScriptファイルの改良
 FullCalendarには、[日程を選択してカレンダーに予定を追加できる機能](https://fullcalendar.io/docs/select-callback)があるのでそちらを用いる。
