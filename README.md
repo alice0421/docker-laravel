@@ -9,4 +9,4 @@
 - （develop）[MacOSで作るDockerを用いたLaravel9+Nginx+MySQL環境構築](https://github.com/alice0421/docker-laravel/tree/develop)
 - （demo-tailwindcss）[Laravel9へのTailwindCSS導入の仕方](https://github.com/alice0421/docker-laravel/tree/demo-tailwindcss)
 - （demo-weatherAPI）[気象庁の天気予報JSONファイルを利用した天気予報WebAPI](https://github.com/alice0421/docker-laravel/tree/demo-weatherAPI)
-- （demo-fullcalendar）[FullCalendar（勉強中）](https://github.com/alice0421/docker-laravel/tree/demo-fullcalendar)
+- （demo-fullcalendar）[Laravel9×FullCalendar(ver.6)](https://github.com/alice0421/docker-laravel/tree/demo-fullcalendar)
