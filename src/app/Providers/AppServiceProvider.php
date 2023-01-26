@@ -23,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // \URL::forceScheme('https'); // AWS（Cloud9）は初期が'http'なので必要
+        // $this->app['request']->server->set('HTTPS','on'); // ペジネーションにも同じく
     }
 }
