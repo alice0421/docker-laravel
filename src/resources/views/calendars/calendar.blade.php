@@ -20,10 +20,23 @@
                     <input id="new-id" type="hidden" name="id" value="" />
                     <label for="event_title">タイトル</label>
                     <input id="new-event_title" class="input-title" type="text" name="event_title" value="" />
-                    <label for="start_date">開始日時</label>
-                    <input id="new-start_date" class="input-date" type="date" name="start_date" value="" />
-                    <label for="end_date">終了日時</label>
-                    <input id="new-end_date" class="input-date" type="date" name="end_date" value="" />
+                    <div id="new-event_date">
+                        <label for="start_date">開始日程</label>
+                        <input id="new-start_date" class="input-date" type="date" name="start_date" value="" />
+                        <label for="end_date">終了日程</label>
+                        <input id="new-end_date" class="input-date" type="date" name="end_date" value="" />
+                    </div>
+                    <div id="new-event_time" style="display: none;">
+                        <label for="start_time">開始時間</label>
+                        <input id="new-start_time" class="input-date" type="time" name="start_time" value="" />
+                        <label for="end_time">終了時間</label>
+                        <input id="new-end_time" class="input-date" type="time" name="end_time" value="" />
+                    </div>
+                    <label for="is_allday">
+                        <input type="hidden" name="is_allday" value="false">
+                        <input id="new-date_mode" class="input-date_mode" type="checkbox" name="is_allday" value="true" onclick="changeDateMode()">
+                        終日
+                    </label>
                     <label for="event_body" style="display: block">内容</label>
                     <textarea id="new-event_body" name="event_body" rows="3" value=""></textarea>
                     <label for="event_color">背景色</label>
@@ -47,10 +60,23 @@
                     <input type="hidden" id="id" name="id" value="" />
                     <label for="event_title">タイトル</label>
                     <input class="input-title" type="text" id="event_title" name="event_title" value="" />
-                    <label for="start_date">開始日時</label>
-                    <input class="input-date" type="date" id="start_date" name="start_date" value="" />
-                    <label for="end_date">終了日時</label>
-                    <input class="input-date" type="date" id="end_date" name="end_date" value="" />
+                    <div id="event_date">
+                        <label for="start_date">開始日程</label>
+                        <input id="start_date" class="input-date" type="date" name="start_date" value="" />
+                        <label for="end_date">終了日程</label>
+                        <input id="end_date" class="input-date" type="date" name="end_date" value="" />
+                    </div>
+                    <div id="event_time">
+                        <label for="start_time">開始時間</label>
+                        <input id="start_time" class="input-date" type="time" name="start_time" value="" />
+                        <label for="end_time">終了時間</label>
+                        <input id="end_time" class="input-date" type="time" name="end_time" value="" />
+                    </div>
+                    <label for="is_allday">
+                        <input type="hidden" name="is_allday" value="false">
+                        <input id="date_mode" class="input-date_mode" type="checkbox" name="is_allday" value="true" onclick="changeUpdateDateMode()">
+                        終日
+                    </label>
                     <label for="event_body" style="display: block">内容</label>
                     <textarea id="event_body" name="event_body" rows="3" value=""></textarea>
                     <label for="event_color">背景色</label>
@@ -95,7 +121,7 @@
 }
 .modal-contents{
     background-color: white;
-    height: 400px;
+    height: 480px;
     width: 600px;
     padding: 20px;
 }
@@ -113,7 +139,10 @@ input{
 }
 .input-date{
     width: 27%;
-    margin: 0 5px 20px 0;
+    margin: 0 5px 5px 0;
+}
+.input-date_mode{
+    margin-bottom: 20px;
 }
 textarea{
     display: block;

@@ -8,10 +8,16 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 // 日付を-1してYYYY-MM-DDの書式で返すメソッド
 function formatDate(date, pos) {
     var dt = new Date(date);
-    if(pos==="end"){
+    if(pos==="end_allday"){ // 終日のときだけ終了日を1日減らす
         dt.setDate(dt.getDate() - 1);
     }
-    return dt.getFullYear() + '-' +('0' + (dt.getMonth()+1)).slice(-2)+ '-' +  ('0' + dt.getDate()).slice(-2);
+    return dt.getFullYear() + '-' + ('0' + (dt.getMonth() + 1)).slice(-2) + '-' +  ('0' + dt.getDate()).slice(-2);
+}
+
+// 日付を-1してYYYY-MM-DDの書式で返すメソッド
+function formatTime(date) {
+    var dt = new Date(date);
+    return dt.getHours().toString().padStart(2, '0') + ':' + dt.getMinutes().toString().padStart(2, '0') + ':00';
 }
 
 // カレンダーを表示させたいタグのidを取得
@@ -33,6 +39,10 @@ let calendar = new Calendar(calendarEl, {
                 document.getElementById("new-event_title").value = "";
                 document.getElementById("new-start_date").value = "";
                 document.getElementById("new-end_date").value = "";
+                document.getElementById('new-event_time').style.display = 'none';
+                document.getElementById("new-start_time").value = "";
+                document.getElementById("new-end_time").value = "";
+                document.getElementById("new-date_mode").checked = true;
                 document.getElementById("new-event_body").value = "";
                 document.getElementById("new-event_color").value = "blue";
 
@@ -55,7 +65,19 @@ let calendar = new Calendar(calendarEl, {
         document.getElementById("new-id").value = "";
         document.getElementById("new-event_title").value = "";
         document.getElementById("new-start_date").value = formatDate(info.start);
-        document.getElementById("new-end_date").value = formatDate(info.end, "end");
+        if(info.allDay){
+            document.getElementById("new-end_date").value = formatDate(info.end, "end_allday");
+            document.getElementById('new-event_time').style.display = 'none';
+            document.getElementById("new-start_time").value = "";
+            document.getElementById("new-end_time").value = "";
+            document.getElementById("new-date_mode").checked = true;
+        }else{
+            document.getElementById("new-end_date").value = formatDate(info.end);
+            document.getElementById('new-event_time').style.display = 'block';
+            document.getElementById("new-start_time").value = formatTime(info.start);
+            document.getElementById("new-end_time").value = formatTime(info.end);
+            document.getElementById("new-date_mode").checked = false;
+        }
         document.getElementById("new-event_body").value = "";
         document.getElementById("new-event_color").value = "blue";
 
@@ -90,7 +112,18 @@ let calendar = new Calendar(calendarEl, {
         document.getElementById("delete-id").value = info.event.id;
         document.getElementById("event_title").value = info.event.title;
         document.getElementById("start_date").value = formatDate(info.event.start);
-        document.getElementById("end_date").value = formatDate(info.event.end, "end");
+        if(info.event.allDay){
+            document.getElementById("end_date").value = formatDate(info.event.end, "end_allday");
+            document.getElementById("start_time").value = "";
+            document.getElementById("end_time").value = "";
+            document.getElementById('event_time').style.display = 'none';
+        }else{
+            document.getElementById("end_date").value = formatDate(info.event.end);
+            document.getElementById("start_time").value = formatTime(info.event.start);
+            document.getElementById("end_time").value = formatTime(info.event.end);
+            document.getElementById('event_time').style.display = 'block';
+        }
+        document.getElementById("date_mode").checked = info.event.allDay;
         document.getElementById("event_body").value = info.event.extendedProps.description;
         document.getElementById("event_color").value = info.event.backgroundColor;
 

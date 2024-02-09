@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event; // Model追加忘れずに
 use Illuminate\Http\Request;
+use DateTime;
 
 class EventController extends Controller
 {   
@@ -19,14 +20,22 @@ class EventController extends Controller
             'event_title' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
+            'is_allday' => 'required',
             'event_color' => 'required',
         ]);
 
         // 登録処理
         $event->event_title = $request->input('event_title');
         $event->event_body = $request->input('event_body');
-        $event->start_date = $request->input('start_date');
-        $event->end_date = date("Y-m-d", strtotime("{$request->input('end_date')} +1 day"));
+        $event->is_allday = $request->input('is_allday') == 'true';
+        if($event->is_allday){ // 終日ならば日付のみ保存
+            $event->start_date = $request->input('start_date');
+            $event->end_date = $request->input('end_date');
+            $event->end_date = date("Y-m-d", strtotime("{$request->input('end_date')} +1 day"));
+        }else{ // 終日でないならば日時を保存
+            $event->start_date = new DateTime($request->input('start_date'). " " . $request->input('start_time'));
+            $event->end_date = new DateTime($request->input('end_date'). " " . $request->input('end_time'));
+        }
         $event->event_color = $request->input('event_color');
         $event->event_border_color = $request->input('event_color');
         $event->save();
@@ -55,6 +64,7 @@ class EventController extends Controller
                 'event_body as description',
                 'start_date as start',
                 'end_date as end',
+                'is_allday as allDay',
                 'event_color as backgroundColor',
                 'event_border_color as borderColor'
             )
@@ -70,8 +80,14 @@ class EventController extends Controller
 
         $input->event_title = $request->input('event_title');
         $input->event_body = $request->input('event_body');
-        $input->start_date = $request->input('start_date');
-        $input->end_date = date("Y-m-d", strtotime("{$request->input('end_date')} +1 day"));
+        $input->is_allday = $request->input('is_allday') == 'true';
+        if($input->is_allday){ // 終日ならば日付のみ保存
+            $input->start_date = $request->input('start_date');
+            $input->end_date = date("Y-m-d", strtotime("{$request->input('end_date')} +1 day"));
+        }else{ // 終日でないならば日時を保存
+            $input->start_date = new DateTime($request->input('start_date'). " " . $request->input('start_time'));
+            $input->end_date = new DateTime($request->input('end_date'). " " . $request->input('end_time'));
+        }
         $input->event_color = $request->input('event_color');
         $input->event_border_color = $request->input('event_color');
 
