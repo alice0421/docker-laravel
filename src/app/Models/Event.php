@@ -15,6 +15,7 @@ class Event extends Model
         'event_body',
         'start_date',
         'end_date',
+        'is_allday',
         'event_color',
         'event_border_color',
     ];

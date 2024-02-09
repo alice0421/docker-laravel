@@ -14,3 +14,25 @@ window.deleteEvent = function(){
         document.getElementById('delete-form').submit();
     }
 }
+
+// 終日チェック管理
+window.changeDateMode = function(){
+    const is_allday = document.getElementById('new-date_mode').checked;
+
+    if(is_allday){
+        document.getElementById('new-event_time').style.display = 'none';
+    }else{
+        document.getElementById('new-event_time').style.display = 'block';
+    }
+}
+
+// 終日チェック管理
+window.changeUpdateDateMode = function(){
+    const is_allday = document.getElementById('date_mode').checked;
+
+    if(is_allday){
+        document.getElementById('event_time').style.display = 'none';
+    }else{
+        document.getElementById('event_time').style.display = 'block';
+    }
+}
