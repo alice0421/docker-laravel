@@ -15,37 +15,49 @@
         <!-- カレンダー新規追加モーダル -->
         <div id="modal-add" class="modal">
             <div class="modal-contents">
-                <form method="POST" action="{{ route('create') }}">
+                <form id="add-form" method="POST" action="{{ route('create') }}">
                     @csrf
                     <input id="new-id" type="hidden" name="id" value="" />
-                    <label for="event_title">タイトル</label>
-                    <input id="new-event_title" class="input-title" type="text" name="event_title" value="" />
-                    <div id="new-event_date">
-                        <label for="start_date">開始日程</label>
-                        <input id="new-start_date" class="input-date" type="date" name="start_date" value="" />
-                        <label for="end_date">終了日程</label>
-                        <input id="new-end_date" class="input-date" type="date" name="end_date" value="" />
+                    <div class="title">
+                        <label for="new-event_title">タイトル</label>
+                        <input id="new-event_title" class="input-title" type="text" name="event_title" value="" />
+                        <p id="error_new-event_title" class="error"></p>
                     </div>
-                    <div id="new-event_time" style="display: none;">
-                        <label for="start_time">開始時間</label>
-                        <input id="new-start_time" class="input-date" type="time" name="start_time" value="" />
-                        <label for="end_time">終了時間</label>
-                        <input id="new-end_time" class="input-date" type="time" name="end_time" value="" />
+                    <div class="date">
+                        <div id="new-event_date">
+                            <label for="new-start_date">開始日程</label>
+                            <input id="new-start_date" class="input-date" type="date" name="start_date" value="" />
+                            <label for="new-end_date">終了日程</label>
+                            <input id="new-end_date" class="input-date" type="date" name="end_date" value="" />
+                        </div>
+                        <div id="new-event_time" style="display: none;">
+                            <label for="new-start_time">開始時間</label>
+                            <input id="new-start_time" class="input-date" type="time" name="start_time" value="" />
+                            <label for="new-end_time">終了時間</label>
+                            <input id="new-end_time" class="input-date" type="time" name="end_time" value="" />
+                        </div>
+                        <label for="new-is_allday">
+                            <input type="hidden" name="is_allday" value="false">
+                            <input id="new-is_allday" class="input-is_allday" type="checkbox" name="is_allday" value="true" onclick="changeDateMode()">
+                            終日
+                        </label>
+                        <p id="error_new-event_date" class="error"></p>
                     </div>
-                    <label for="is_allday">
-                        <input type="hidden" name="is_allday" value="false">
-                        <input id="new-date_mode" class="input-date_mode" type="checkbox" name="is_allday" value="true" onclick="changeDateMode()">
-                        終日
-                    </label>
-                    <label for="event_body" style="display: block">内容</label>
-                    <textarea id="new-event_body" name="event_body" rows="3" value=""></textarea>
-                    <label for="event_color">背景色</label>
-                    <select id="new-event_color" name="event_color">
-                        <option value="blue" selected>青</option>
-                        <option value="green">緑</option>
-                    </select>
-                    <button type="button" onclick="closeAddModal()">キャンセル</button>
-                    <button type="submit">決定</button>
+                    <div class="body">
+                        <label for="new-event_body" style="display: block">内容</label>
+                        <textarea id="new-event_body" name="event_body" rows="3" value=""></textarea>
+                    </div>
+                    <div class="option">
+                        <label for="new-event_color">背景色</label>
+                        <select id="new-event_color" name="event_color">
+                            <option value="blue" selected>青</option>
+                            <option value="green">緑</option>
+                        </select>
+                    </div>
+                    <div class="button">
+                        <button type="button" onclick="closeAddModal()">キャンセル</button>
+                        <button type="submit" onclick="AddEvent()">決定</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -54,38 +66,50 @@
         <!-- 別ページなら、$eventでの取得が容易にできる -->
         <div id="modal-update" class="modal">
             <div class="modal-contents">
-                <form method="POST" action="{{ route('update') }}" >
+                <form id="update-form" method="POST" action="{{ route('update') }}" >
                     @csrf
                     @method('PUT')
                     <input type="hidden" id="id" name="id" value="" />
-                    <label for="event_title">タイトル</label>
-                    <input class="input-title" type="text" id="event_title" name="event_title" value="" />
-                    <div id="event_date">
-                        <label for="start_date">開始日程</label>
-                        <input id="start_date" class="input-date" type="date" name="start_date" value="" />
-                        <label for="end_date">終了日程</label>
-                        <input id="end_date" class="input-date" type="date" name="end_date" value="" />
+                    <div class="title">
+                        <label for="event_title">タイトル</label>
+                        <input class="input-title" type="text" id="event_title" name="event_title" value="" />
+                        <p id="error_event_title" class="error"></p>
                     </div>
-                    <div id="event_time">
-                        <label for="start_time">開始時間</label>
-                        <input id="start_time" class="input-date" type="time" name="start_time" value="" />
-                        <label for="end_time">終了時間</label>
-                        <input id="end_time" class="input-date" type="time" name="end_time" value="" />
+                    <div class="date">
+                        <div id="event_date">
+                            <label for="start_date">開始日程</label>
+                            <input id="start_date" class="input-date" type="date" name="start_date" value="" />
+                            <label for="end_date">終了日程</label>
+                            <input id="end_date" class="input-date" type="date" name="end_date" value="" />
+                        </div>
+                        <div id="event_time">
+                            <label for="start_time">開始時間</label>
+                            <input id="start_time" class="input-date" type="time" name="start_time" value="" />
+                            <label for="end_time">終了時間</label>
+                            <input id="end_time" class="input-date" type="time" name="end_time" value="" />
+                        </div>
+                        <label for="is_allday">
+                            <input type="hidden" name="is_allday" value="false">
+                            <input id="is_allday" class="input-is_allday" type="checkbox" name="is_allday" value="true" onclick="changeUpdateDateMode()">
+                            終日
+                        </label>
+                        <p id="error_event_date" class="error"></p>
                     </div>
-                    <label for="is_allday">
-                        <input type="hidden" name="is_allday" value="false">
-                        <input id="date_mode" class="input-date_mode" type="checkbox" name="is_allday" value="true" onclick="changeUpdateDateMode()">
-                        終日
-                    </label>
-                    <label for="event_body" style="display: block">内容</label>
-                    <textarea id="event_body" name="event_body" rows="3" value=""></textarea>
-                    <label for="event_color">背景色</label>
-                    <select id="event_color" name="event_color">
-                        <option value="blue">青</option>
-                        <option value="green">緑</option>
-                    </select>
-                    <button type="button" onclick="closeUpdateModal()">キャンセル</button>
-                    <button type="submit">決定</button>
+                    <div class="body">
+                        <label for="event_body" style="display: block">内容</label>
+                        <textarea id="event_body" name="event_body" rows="3" value=""></textarea>
+                    </div>
+                    <div class="option">
+                        <label for="event_color">背景色</label>
+                        <select id="event_color" name="event_color">
+                            <option value="blue">青</option>
+                            <option value="green">緑</option>
+                        </select>
+                    </div>
+                    <div class="button">
+                        <button type="button" onclick="closeUpdateModal()">キャンセル</button>
+                        <button type="submit" onclick="updateEvent()">決定</button>
+                    </div>
                 </form>
                 <form id="delete-form" method="post" action="{{ route('delete') }}">
                     @csrf
@@ -100,7 +124,7 @@
 
 <style scoped>
 /* event上はマウスがポインターになる */
-.fc-event-title-container{
+.fc-event-title-container, .fc-event-time{
     cursor: pointer;
 }
 
@@ -121,9 +145,15 @@
 }
 .modal-contents{
     background-color: white;
-    height: 480px;
-    width: 600px;
+    height: 520px;
+    width: 650px;
     padding: 20px;
+}
+
+/* エラー文 */
+.error{
+    color: red;
+    margin-bottom: 5px;
 }
 
 /* その他 */
@@ -132,22 +162,24 @@ input{
     border: 1px solid black;
     border-radius: 5px;
 }
+.title, .date, .body, .option{
+    margin-bottom: 20px;
+}
 .input-title{
     display: block;
     width: 80%;
-    margin: 0 0 20px;
+    margin-bottom: 5px;
 }
 .input-date{
     width: 27%;
     margin: 0 5px 5px 0;
 }
-.input-date_mode{
-    margin-bottom: 20px;
+.input-is_allday{
+    margin-bottom: 5px;
 }
 textarea{
     display: block;
     width: 80%;
-    margin: 0 0 20px;
     padding: 2px;
     border: 1px solid black;
     border-radius: 5px;
@@ -156,7 +188,6 @@ textarea{
 select{
     display: block;
     width: 20%;
-    margin: 0 0 20px;
     padding: 2px;
     border: 1px solid black;
     border-radius: 5px;

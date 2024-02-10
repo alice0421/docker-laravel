@@ -11,10 +11,10 @@ function formatDate(date, pos) {
     if(pos==="end_allday"){ // 終日のときだけ終了日を1日減らす
         dt.setDate(dt.getDate() - 1);
     }
-    return dt.getFullYear() + '-' + ('0' + (dt.getMonth() + 1)).slice(-2) + '-' +  ('0' + dt.getDate()).slice(-2);
+    return dt.getFullYear() + '-' + (dt.getMonth() + 1).toString().padStart(2, '0') + '-' +  dt.getDate().toString().padStart(2, '0');
 }
 
-// 日付を-1してYYYY-MM-DDの書式で返すメソッド
+// 時間の調整メソッド
 function formatTime(date) {
     var dt = new Date(date);
     return dt.getHours().toString().padStart(2, '0') + ':' + dt.getMinutes().toString().padStart(2, '0') + ':00';
@@ -42,7 +42,7 @@ let calendar = new Calendar(calendarEl, {
                 document.getElementById('new-event_time').style.display = 'none';
                 document.getElementById("new-start_time").value = "";
                 document.getElementById("new-end_time").value = "";
-                document.getElementById("new-date_mode").checked = true;
+                document.getElementById("new-is_allday").checked = true;
                 document.getElementById("new-event_body").value = "";
                 document.getElementById("new-event_color").value = "blue";
 
@@ -70,13 +70,13 @@ let calendar = new Calendar(calendarEl, {
             document.getElementById('new-event_time').style.display = 'none';
             document.getElementById("new-start_time").value = "";
             document.getElementById("new-end_time").value = "";
-            document.getElementById("new-date_mode").checked = true;
+            document.getElementById("new-is_allday").checked = true;
         }else{
             document.getElementById("new-end_date").value = formatDate(info.end);
             document.getElementById('new-event_time').style.display = 'block';
             document.getElementById("new-start_time").value = formatTime(info.start);
             document.getElementById("new-end_time").value = formatTime(info.end);
-            document.getElementById("new-date_mode").checked = false;
+            document.getElementById("new-is_allday").checked = false;
         }
         document.getElementById("new-event_body").value = "";
         document.getElementById("new-event_color").value = "blue";
@@ -123,7 +123,7 @@ let calendar = new Calendar(calendarEl, {
             document.getElementById("end_time").value = formatTime(info.event.end);
             document.getElementById('event_time').style.display = 'block';
         }
-        document.getElementById("date_mode").checked = info.event.allDay;
+        document.getElementById("is_allday").checked = info.event.allDay;
         document.getElementById("event_body").value = info.event.extendedProps.description;
         document.getElementById("event_color").value = info.event.backgroundColor;
 
