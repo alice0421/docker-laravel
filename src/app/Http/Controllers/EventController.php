@@ -35,6 +35,7 @@ class EventController extends Controller
         }else{ // 終日でないならば日時を保存
             $event->start_date = new DateTime($request->input('start_date'). " " . $request->input('start_time'));
             $event->end_date = new DateTime($request->input('end_date'). " " . $request->input('end_time'));
+            if($input->end_date == $input->start_date) $input->end_date->modify('+1 second'); // 同一時刻のバグ防ぎ
         }
         $event->event_color = $request->input('event_color');
         $event->event_border_color = $request->input('event_color');
@@ -87,6 +88,7 @@ class EventController extends Controller
         }else{ // 終日でないならば日時を保存
             $input->start_date = new DateTime($request->input('start_date'). " " . $request->input('start_time'));
             $input->end_date = new DateTime($request->input('end_date'). " " . $request->input('end_time'));
+            if($input->end_date == $input->start_date) $input->end_date->modify('+1 second'); // 同一時刻のバグ防ぎ
         }
         $input->event_color = $request->input('event_color');
         $input->event_border_color = $request->input('event_color');
