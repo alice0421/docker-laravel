@@ -1,7 +1,8 @@
 // viteでjsから関数をhtmlに読み込むときはwindows.〜と書く
 
-// 時間の調整メソッド
-function formatTime(dt) {
+// 現在の時間を15分単位で丸め込み
+function setDefaultTime(dt) {
+    dt.setMinutes(Math.round(dt.getMinutes() / 15) * 15);
     return dt.getHours().toString().padStart(2, '0') + ':' + dt.getMinutes().toString().padStart(2, '0') + ':00';
 }
 
@@ -32,17 +33,34 @@ window.changeDateMode = function(){
 
     if(is_allday){
         document.getElementById('new-event_time').style.display = 'none';
+        window.is_first_clicked_allday = false;
     }else{
         document.getElementById('new-event_time').style.display = 'block';
+        if(window.is_first_clicked_allday){ // 初めて終日のチェックを外したときは、現在時刻を表示する
+            const now = new Date();
+            document.getElementById("new-start_time").value = setDefaultTime(now);
+            now.setMinutes(now.getMinutes() + 30);
+            document.getElementById("new-end_time").value = setDefaultTime(now);
+            window.is_first_clicked_allday = false;
+        }
     }
 }
 window.changeUpdateDateMode = function(){
+    console.log(window.is_first_clicked_allday);
     const is_allday = document.getElementById('is_allday').checked;
 
     if(is_allday){
         document.getElementById('event_time').style.display = 'none';
+        window.is_first_clicked_allday = false;
     }else{
         document.getElementById('event_time').style.display = 'block';
+        if(window.is_first_clicked_allday){ // 初めて終日のチェックを外したときは、現在時刻を表示する
+            const now = new Date();
+            document.getElementById("start_time").value = setDefaultTime(now);
+            now.setMinutes(now.getMinutes() + 30);
+            document.getElementById("end_time").value = setDefaultTime(now);
+            window.is_first_clicked_allday = false;
+        }
     }
 }
 
