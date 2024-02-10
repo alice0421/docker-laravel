@@ -46,7 +46,6 @@ window.changeDateMode = function(){
     }
 }
 window.changeUpdateDateMode = function(){
-    console.log(window.is_first_clicked_allday);
     const is_allday = document.getElementById('is_allday').checked;
 
     if(is_allday){
